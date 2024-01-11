@@ -217,7 +217,6 @@ public:
     WatchOS,    // Apple watchOS
     DriverKit,  // Apple DriverKit
     XROS,       // Apple XROS
-
     Mesa3D,
     Contiki,
     AMDPAL,     // AMD PAL Runtime
