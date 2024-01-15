@@ -28,6 +28,8 @@ PlatformType mapToPlatformType(PlatformType Platform, bool WantSim) {
     return WantSim ? PLATFORM_TVOSSIMULATOR : PLATFORM_TVOS;
   case PLATFORM_WATCHOS:
     return WantSim ? PLATFORM_WATCHOSSIMULATOR : PLATFORM_WATCHOS;
+  case PLATFORM_XROS:
+    return WantSim ? PLATFORM_XROSSIMULATOR : PLATFORM_XROS;
   }
 }
 
@@ -49,6 +51,9 @@ PlatformType mapToPlatformType(const Triple &Target) {
   case Triple::WatchOS:
     return Target.isSimulatorEnvironment() ? PLATFORM_WATCHOSSIMULATOR
                                            : PLATFORM_WATCHOS;
+  case Triple::XROS:
+    return Target.isSimulatorEnvironment() ? PLATFORM_XROSSIMULATOR
+                                           : PLATFORM_XROS;
     // TODO: add bridgeOS & driverKit once in llvm::Triple
   }
 }
@@ -72,6 +77,8 @@ StringRef getPlatformName(PlatformType Platform) {
     return "tvOS";
   case PLATFORM_WATCHOS:
     return "watchOS";
+  case PLATFORM_XROS:
+    return "visionOS";
   case PLATFORM_BRIDGEOS:
     return "bridgeOS";
   case PLATFORM_MACCATALYST:
@@ -82,6 +89,8 @@ StringRef getPlatformName(PlatformType Platform) {
     return "tvOS Simulator";
   case PLATFORM_WATCHOSSIMULATOR:
     return "watchOS Simulator";
+  case PLATFORM_XROSSIMULATOR:
+    return "visionOS Simulator";
   case PLATFORM_DRIVERKIT:
     return "DriverKit";
   }
@@ -95,11 +104,13 @@ PlatformType getPlatformFromName(StringRef Name) {
       .Case("ios", PLATFORM_IOS)
       .Case("tvos", PLATFORM_TVOS)
       .Case("watchos", PLATFORM_WATCHOS)
+      .Case("xros", PLATFORM_XROS)
       .Case("bridgeos", PLATFORM_BRIDGEOS)
       .Case("ios-macabi", PLATFORM_MACCATALYST)
       .Case("ios-simulator", PLATFORM_IOSSIMULATOR)
       .Case("tvos-simulator", PLATFORM_TVOSSIMULATOR)
       .Case("watchos-simulator", PLATFORM_WATCHOSSIMULATOR)
+      .Case("xros-simulator", PLATFORM_XROSSIMULATOR)
       .Case("driverkit", PLATFORM_DRIVERKIT)
       .Default(PLATFORM_UNKNOWN);
 }
@@ -131,7 +142,7 @@ std::string getOSAndEnvironmentName(PlatformType Platform,
     return "driverkit" + Version;
   case PLATFORM_XROS:
     return "xros" + Version;
-  case PLATFORM_XROS_SIMULATOR:
+  case PLATFORM_XROSSIMULATOR:
     return "xros" + Version + "-simulator";
   }
   llvm_unreachable("Unknown llvm::MachO::PlatformType enum");
