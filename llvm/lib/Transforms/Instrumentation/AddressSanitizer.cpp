@@ -2028,6 +2028,8 @@ bool ModuleAddressSanitizer::ShouldUseMachOGlobalsSection() const {
     return true;
   if (TargetTriple.isDriverKit())
     return true;
+  if (TargetTriple.isXROS())
+    return true;
 
   return false;
 }
