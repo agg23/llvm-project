@@ -3950,6 +3950,8 @@ static unsigned getBaseMachOPlatformID(const llvm::Triple &TT) {
     return llvm::MachO::PLATFORM_TVOS;
   case llvm::Triple::WatchOS:
     return llvm::MachO::PLATFORM_WATCHOS;
+  case llvm::Triple::XROS:
+    return llvm::MachO::PLATFORM_XROS;
   case llvm::Triple::DriverKit:
     return llvm::MachO::PLATFORM_DRIVERKIT;
   default:
@@ -4033,6 +4035,9 @@ static bool isFoundationNeededForDarwinAvailabilityCheck(
   case llvm::Triple::MacOSX:
     FoundationDroppedInVersion = VersionTuple(/*Major=*/10, /*Minor=*/15);
     break;
+  case llvm::Triple::XROS:
+    // XROS doesn't need Foundation.
+    return false;
   case llvm::Triple::DriverKit:
     // DriverKit doesn't need Foundation.
     return false;
