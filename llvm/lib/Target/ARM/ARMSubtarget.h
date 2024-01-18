@@ -359,6 +359,7 @@ public:
   bool isTargetDarwin() const { return TargetTriple.isOSDarwin(); }
   bool isTargetIOS() const { return TargetTriple.isiOS(); }
   bool isTargetWatchOS() const { return TargetTriple.isWatchOS(); }
+  bool isTargetXROS() const { return TargetTriple.isXROS(); }
   bool isTargetWatchABI() const { return TargetTriple.isWatchABI(); }
   bool isTargetDriverKit() const { return TargetTriple.isDriverKit(); }
   bool isTargetLinux() const { return TargetTriple.isOSLinux(); }

@@ -490,7 +490,8 @@ ARMTargetLowering::ARMTargetLowering(const TargetMachine &TM,
   setBooleanVectorContents(ZeroOrNegativeOneBooleanContent);
 
   if (!Subtarget->isTargetDarwin() && !Subtarget->isTargetIOS() &&
-      !Subtarget->isTargetWatchOS() && !Subtarget->isTargetDriverKit()) {
+      !Subtarget->isTargetWatchOS() && !Subtarget->isTargetDriverKit() &&
+      !Subtarget->isTargetXROS()) {
     bool IsHFTarget = TM.Options.FloatABIType == FloatABI::Hard;
     for (int LCID = 0; LCID < RTLIB::UNKNOWN_LIBCALL; ++LCID)
       setLibcallCallingConv(static_cast<RTLIB::Libcall>(LCID),

@@ -1882,6 +1882,8 @@ VersionTuple Triple::getMinimumSupportedOSVersion() const {
     if (isSimulatorEnvironment())
       return VersionTuple(7, 0, 0);
     break;
+  case Triple::XROS:
+    return VersionTuple(1, 0, 0);
   case Triple::DriverKit:
     return VersionTuple(20, 0, 0);
   default:

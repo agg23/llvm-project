@@ -9403,6 +9403,8 @@ static void PrintVersionMinLoadCommand(MachO::version_min_command vd) {
     break;
   case MachO::LC_VERSION_MIN_WATCHOS:
     LoadCmdName = "LC_VERSION_MIN_WATCHOS";
+  case MachO::LC_VERSION_MIN_XROS:
+    LoadCmdName = "LC_VERSION_MIN_XROS";
     break;
   default:
     llvm_unreachable("Unknown version min load command");
@@ -10455,7 +10457,8 @@ static void PrintLoadCommands(const MachOObjectFile *Obj, uint32_t filetype,
     } else if (Command.C.cmd == MachO::LC_VERSION_MIN_MACOSX ||
                Command.C.cmd == MachO::LC_VERSION_MIN_IPHONEOS ||
                Command.C.cmd == MachO::LC_VERSION_MIN_TVOS ||
-               Command.C.cmd == MachO::LC_VERSION_MIN_WATCHOS) {
+               Command.C.cmd == MachO::LC_VERSION_MIN_WATCHOS ||
+               Command.C.cmd == MachO::LC_VERSION_MIN_XROS) {
       MachO::version_min_command Vd = Obj->getVersionMinLoadCommand(Command);
       PrintVersionMinLoadCommand(Vd);
     } else if (Command.C.cmd == MachO::LC_NOTE) {

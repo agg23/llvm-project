@@ -185,6 +185,8 @@ public:
     addDirectiveHandler<&DarwinAsmParser::parseSectionDirectiveIdent>(".ident");
     addDirectiveHandler<&DarwinAsmParser::parseWatchOSVersionMin>(
       ".watchos_version_min");
+    addDirectiveHandler<&DarwinAsmParser::parseXROSVersionMin>(
+      ".xros_version_min");
     addDirectiveHandler<&DarwinAsmParser::parseTvOSVersionMin>(
       ".tvos_version_min");
     addDirectiveHandler<&DarwinAsmParser::parseIOSVersionMin>(
@@ -445,6 +447,9 @@ public:
 
   bool parseWatchOSVersionMin(StringRef Directive, SMLoc Loc) {
     return parseVersionMin(Directive, Loc, MCVM_WatchOSVersionMin);
+  }
+  bool parseXROSVersionMin(StringRef Directive, SMLoc Loc) {
+    return parseVersionMin(Directive, Loc, MCVM_XROSVersionMin);
   }
   bool parseTvOSVersionMin(StringRef Directive, SMLoc Loc) {
     return parseVersionMin(Directive, Loc, MCVM_TvOSVersionMin);
@@ -1106,6 +1111,7 @@ void DarwinAsmParser::checkVersion(StringRef Directive, StringRef Arg,
 static Triple::OSType getOSTypeFromMCVM(MCVersionMinType Type) {
   switch (Type) {
   case MCVM_WatchOSVersionMin: return Triple::WatchOS;
+  case MCVM_XROSVersionMin:    return Triple::XROS;
   case MCVM_TvOSVersionMin:    return Triple::TvOS;
   case MCVM_IOSVersionMin:     return Triple::IOS;
   case MCVM_OSXVersionMin:     return Triple::MacOSX;
@@ -1118,6 +1124,7 @@ static Triple::OSType getOSTypeFromMCVM(MCVersionMinType Type) {
 ///   |   .macosx_version_min parseVersion parseSDKVersion
 ///   |   .tvos_version_min parseVersion parseSDKVersion
 ///   |   .watchos_version_min parseVersion parseSDKVersion
+///   |   .xros_version_min parseVersion parseSDKVersion
 bool DarwinAsmParser::parseVersionMin(StringRef Directive, SMLoc Loc,
                                       MCVersionMinType Type) {
   unsigned Major;
@@ -1161,7 +1168,7 @@ static Triple::OSType getOSTypeFromPlatform(MachO::PlatformType Type) {
 }
 
 /// parseBuildVersion
-///   ::= .build_version (macos|ios|tvos|watchos), parseVersion parseSDKVersion
+///   ::= .build_version (macos|ios|tvos|watchos|xros), parseVersion parseSDKVersion
 bool DarwinAsmParser::parseBuildVersion(StringRef Directive, SMLoc Loc) {
   StringRef PlatformName;
   SMLoc PlatformLoc = getTok().getLoc();

@@ -200,6 +200,8 @@ static int writeTbdStub(const Triple &T, const std::vector<IFSSymbol> &Symbols,
       return llvm::MachO::PLATFORM_TVOS;
     if (T.isWatchOS())
       return llvm::MachO::PLATFORM_WATCHOS;
+    if (T.isXROS())
+      return llvm::MachO::PLATFORM_XROS;
     // Note: put isiOS last because tvOS and watchOS are also iOS according
     // to the Triple.
     if (T.isiOS())

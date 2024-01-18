@@ -846,6 +846,9 @@ void MachODumper::printMachOVersionMin() {
     case MachO::LC_VERSION_MIN_WATCHOS:
       Cmd = "LC_VERSION_MIN_WATCHOS";
       break;
+    case MachO::LC_VERSION_MIN_XROS:
+      Cmd = "LC_VERSION_MIN_XROS";
+      break;
     case MachO::LC_BUILD_VERSION:
       Cmd = "LC_BUILD_VERSION";
       break;

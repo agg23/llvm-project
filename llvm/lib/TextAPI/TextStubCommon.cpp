@@ -73,6 +73,11 @@ void ScalarTraits<PlatformSet>::output(const PlatformSet &Values, void *IO,
   case PLATFORM_WATCHOS:
     OS << "watchos";
     break;
+  case PLATFORM_XROS_SIMULATOR:
+    [[fallthrough]];
+  case PLATFORM_XROS:
+    OS << "xros";
+    break;
   case PLATFORM_TVOSSIMULATOR:
     [[fallthrough]];
   case PLATFORM_TVOS:
@@ -109,6 +114,7 @@ StringRef ScalarTraits<PlatformSet>::input(StringRef Scalar, void *IO,
                       .Case("macosx", PLATFORM_MACOS)
                       .Case("ios", PLATFORM_IOS)
                       .Case("watchos", PLATFORM_WATCHOS)
+                      .Case("xros", PLATFORM_XROS)
                       .Case("tvos", PLATFORM_TVOS)
                       .Case("bridgeos", PLATFORM_BRIDGEOS)
                       .Case("iosmac", PLATFORM_MACCATALYST)
